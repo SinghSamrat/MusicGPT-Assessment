@@ -38,7 +38,9 @@ struct CustomTabView: View {
         HStack(spacing: 63) {
             ForEach(TabItem.allCases) { tabItem in
                 CustomTabItem(tabItem: tabItem) {
-                    selectedTab = tabItem
+                    withAnimation(.easeInOut(duration: 0.1)) {
+                        selectedTab = tabItem
+                    }
                 }
                 .tag(tabItem)
                 .foregroundColor(selectedTab == tabItem ? .white : .secondary)
@@ -46,6 +48,11 @@ struct CustomTabView: View {
         }
         .frame(maxHeight: 85)
         .padding(.horizontal, 56)
+        .overlay(alignment: .top) {
+            Rectangle()
+                .fill(Color.gray.opacity(0.4))
+                .frame(height: 1)
+        }
     }
 }
 
