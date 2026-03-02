@@ -12,11 +12,21 @@ struct MainTabView: View {
     
     var body: some View {
         VStack {
+            switch selectedTab {
+            case .main:
+                GeneratedItemsListView()
+            case .explore:
+                EmptyView()
+            case .library:
+                EmptyView()
+            case .profile:
+                EmptyView()
+            }
             Spacer()
             CustomTabView(selectedTab: $selectedTab)
         }
-        .padding(.bottom)
-        .ignoresSafeArea()
+        .padding(.vertical)
+        .ignoresSafeArea(edges: .bottom)
     }
 }
 
