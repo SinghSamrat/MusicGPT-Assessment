@@ -12,7 +12,10 @@ struct MusicGPT_AssessmentApp: App {
     
     var body: some Scene {
         WindowGroup {
-            MainTabView()
+            ZStack {
+                Color.appBackground.ignoresSafeArea()
+                MainTabView()
+            }
         }
         .environment(\.colorScheme, .dark)
     }
