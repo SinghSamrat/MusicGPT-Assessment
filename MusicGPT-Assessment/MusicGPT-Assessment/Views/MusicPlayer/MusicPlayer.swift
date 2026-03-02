@@ -38,9 +38,9 @@ struct MusicPlayer: View {
                 AudioControl(isPlaying: $isPlaying) { type in
                     switch type {
                     case .previous:
-                        
+                        break
                     case .next:
-                        
+                        break
                     }
                 }
                     .padding(.trailing, 24)
@@ -49,6 +49,7 @@ struct MusicPlayer: View {
             .padding(.leading, 8)
         }
         .padding(.horizontal)
+        .border(.white.opacity(0.05), width: 1)
     }
 }
 
