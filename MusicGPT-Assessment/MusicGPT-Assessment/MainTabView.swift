@@ -16,6 +16,7 @@ struct MainTabView: View {
             switch selectedTab {
             case .main:
                 GeneratedItemsListView() { item in
+                    playerVM.isPlaying = true
                     playerVM.currentTrack = item
                 }
             case .explore:
@@ -37,7 +38,7 @@ struct MainTabView: View {
                         break
                     }
                 }
-                    .padding(.horizontal, 8)
+                                .padding(.horizontal, 8)
             }
             CustomTabView(selectedTab: $selectedTab)
         }
