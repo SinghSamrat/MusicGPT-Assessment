@@ -37,6 +37,8 @@ struct MainTabView: View {
                     case .previous:
                         break
                     }
+                } trackClosed: {
+                    playerVM.currentTrack = nil
                 }
                                 .padding(.horizontal, 8)
             }

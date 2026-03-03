@@ -17,6 +17,7 @@ struct MusicPlayerView: View {
     @Binding var isPlaying: Bool
     
     var trackChanged: (AudioControlButtonType) -> Void
+    var trackClosed: () -> Void
     
     var body: some View {
         ZStack {
@@ -50,5 +51,5 @@ struct MusicPlayerView: View {
 }
 
 #Preview {
-    MusicPlayerView(selectedTrack: sampleGeneratedItem, isPlaying: .constant(true)) {control in }
+    MusicPlayerView(selectedTrack: sampleGeneratedItem, isPlaying: .constant(true)) {control in } trackClosed: {}
 }
