@@ -11,13 +11,31 @@ struct MainTabView: View {
     @State private var selectedTab: TabItem = .main
     @State var playerVM = MusicPlayerViewModel()
     
+    @State var playerOffsetY: Double = Constants.MusicPlayerAnimation.playerInitialOffset
+    @State var isAnimating: Bool = false
+    
     var body: some View {
         VStack {
             switch selectedTab {
             case .main:
-                GeneratedItemsListView() { item in
-                    playerVM.isPlaying = true
-                    playerVM.currentTrack = item
+                VStack {
+                    GeneratedItemsListView() { item in
+                        if !isAnimating {
+                            playerVM.isPlaying = true
+                            if (playerVM.currentTrack == nil) { // spring anim only if player currently hidden
+                                withAnimation(.spring(response: 0.6, dampingFraction: 0.5)) {
+                                    playerVM.currentTrack = item
+                                }
+                            } else {
+                                playerVM.currentTrack = item
+                            }
+                        }
+                    }
+                    
+                    CreateButtonView() {
+                        // create logic
+                    }
+                    .offset(y: (playerOffsetY <= Constants.MusicPlayerAnimation.playerMaxOffsetY - 5) ? playerOffsetY / 2 : 0)
                 }
             case .explore:
                 EmptyView()
@@ -30,7 +48,8 @@ struct MainTabView: View {
             
             if let currentTrack = playerVM.currentTrack {
                 MusicPlayerView(selectedTrack: currentTrack,
-                                isPlaying: $playerVM.isPlaying) { controlType in
+                                isPlaying: $playerVM.isPlaying,
+                                offsetY: $playerOffsetY) { controlType in
                     switch controlType {
                     case .next:
                         break
@@ -38,7 +57,10 @@ struct MainTabView: View {
                         break
                     }
                 } trackClosed: {
+                    isAnimating = true
                     playerVM.currentTrack = nil
+                } playerDisappeared: {
+                    isAnimating = false
                 }
                                 .padding(.horizontal, 8)
             }

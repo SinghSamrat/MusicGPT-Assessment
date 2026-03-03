@@ -30,10 +30,6 @@ struct GeneratedItemsListView: View {
             }
             
             Spacer()
-            
-            CreateButtonView() {
-                // create logic
-            }
         }
         .padding(.leading)
     }

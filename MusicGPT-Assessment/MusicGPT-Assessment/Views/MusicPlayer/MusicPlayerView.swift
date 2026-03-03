@@ -12,10 +12,13 @@ struct MusicPlayerView: View {
     var selectedTrack: GeneratedItem
     @Binding var isPlaying: Bool
     
-    @State var offsetY: Double = 170.0
+    @Binding var offsetY: Double
+    
+    @State var opacity: Double = 1.0
     
     var trackChanged: (AudioControlButtonType) -> Void
     var trackClosed: () -> Void
+    var playerDisappeared: () -> Void
     
     var body: some View {
         ZStack {
@@ -46,6 +49,7 @@ struct MusicPlayerView: View {
             .padding(.leading, 8)
         }
         .offset(y: offsetY)
+        .opacity(opacity)
         .onAppear {
             withAnimation(.spring(response: 0.7, dampingFraction: 0.6)) {
                 offsetY = 0
@@ -64,7 +68,7 @@ struct MusicPlayerView: View {
                     
                     if translation > 80 || velocity > 300 {
                         withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) {
-                            offsetY = 150
+                            offsetY = Constants.MusicPlayerAnimation.playerMaxOffsetY
                             trackClosed()
                         }
                     } else {
@@ -74,9 +78,12 @@ struct MusicPlayerView: View {
                     }
                 })
         )
+        .onDisappear {
+            playerDisappeared()
+        }
     }
 }
 
 #Preview {
-    MusicPlayerView(selectedTrack: sampleGeneratedItem, isPlaying: .constant(true)) {control in } trackClosed: {}
+    MusicPlayerView(selectedTrack: sampleGeneratedItem, isPlaying: .constant(true), offsetY: .constant(120)) {control in } trackClosed: {} playerDisappeared: {}
 }
