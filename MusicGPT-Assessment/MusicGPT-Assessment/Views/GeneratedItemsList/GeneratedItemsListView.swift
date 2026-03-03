@@ -9,6 +9,7 @@ import SwiftUI
 
 struct GeneratedItemsListView: View {
     @State var viewModel = GeneratedItemsListViewModel()
+    var trackChanged: (GeneratedItem) -> Void
     
     var body: some View {
         VStack(alignment: .center, spacing: 16) {
@@ -21,7 +22,9 @@ struct GeneratedItemsListView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 12) {
                     ForEach(viewModel.allItems, id: \.self) { item in
-                        GeneratedItemView(generatedItem: item) {}
+                        GeneratedItemView(generatedItem: item) {
+                            trackChanged(item)
+                        }
                     }
                 }
             }
@@ -79,5 +82,7 @@ struct TitleView: View {
 
 
 #Preview {
-    GeneratedItemsListView()
+    GeneratedItemsListView() { GeneratedItem in
+        
+    }
 }

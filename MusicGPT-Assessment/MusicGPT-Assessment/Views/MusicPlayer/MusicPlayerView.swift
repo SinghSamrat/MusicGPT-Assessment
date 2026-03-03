@@ -13,8 +13,10 @@ enum AudioControlButtonType {
 }
 
 struct MusicPlayerView: View {
-    @State var selectedTrack: GeneratedItem
-    @State var isPlaying: Bool = true
+    var selectedTrack: GeneratedItem
+    @Binding var isPlaying: Bool
+    
+    var trackChanged: (AudioControlButtonType) -> Void
     
     var body: some View {
         ZStack {
@@ -36,23 +38,17 @@ struct MusicPlayerView: View {
                 Spacer()
                 
                 AudioControlView(isPlaying: $isPlaying) { type in
-                    switch type {
-                    case .previous:
-                        break
-                    case .next:
-                        break
-                    }
+                    trackChanged(type)
                 }
                     .padding(.trailing, 24)
             }
             .frame(height: 72)
             .padding(.leading, 8)
         }
-        .padding(.horizontal)
         .border(.white.opacity(0.05), width: 1)
     }
 }
 
 #Preview {
-    MusicPlayerView(selectedTrack: sampleGeneratedItem)
+    MusicPlayerView(selectedTrack: sampleGeneratedItem, isPlaying: .constant(true)) {control in }
 }

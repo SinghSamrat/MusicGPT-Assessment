@@ -9,12 +9,15 @@ import SwiftUI
 
 struct MainTabView: View {
     @State private var selectedTab: TabItem = .main
+    @State var playerVM = MusicPlayerViewModel()
     
     var body: some View {
         VStack {
             switch selectedTab {
             case .main:
-                GeneratedItemsListView()
+                GeneratedItemsListView() { item in
+                    playerVM.currentTrack = item
+                }
             case .explore:
                 EmptyView()
             case .library:
@@ -23,6 +26,19 @@ struct MainTabView: View {
                 EmptyView()
             }
             Spacer()
+            
+            if let currentTrack = playerVM.currentTrack {
+                MusicPlayerView(selectedTrack: currentTrack,
+                                isPlaying: $playerVM.isPlaying) { controlType in
+                    switch controlType {
+                    case .next:
+                        break
+                    case .previous:
+                        break
+                    }
+                }
+                    .padding(.horizontal, 8)
+            }
             CustomTabView(selectedTab: $selectedTab)
         }
         .padding(.vertical)

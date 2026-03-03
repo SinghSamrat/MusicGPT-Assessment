@@ -31,11 +31,13 @@ struct GeneratedItemView: View  {
             Spacer()
             
             Button {
-                itemTapped()
             } label: {
                 Image(systemName: "ellipsis")
                     .tint(.secondary)
             }
+        }
+        .onTapGesture {
+            itemTapped()
         }
     }
 }
