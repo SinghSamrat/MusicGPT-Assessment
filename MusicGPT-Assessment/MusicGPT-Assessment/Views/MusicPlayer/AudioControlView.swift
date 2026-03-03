@@ -8,6 +8,11 @@
 
 import SwiftUI
 
+enum AudioControlButtonType {
+    case previous
+    case next
+}
+
 struct AudioControlView: View {
     @Binding var isPlaying: Bool
     var audioControlPressed: (AudioControlButtonType) -> Void

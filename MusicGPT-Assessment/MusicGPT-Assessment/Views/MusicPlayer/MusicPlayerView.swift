@@ -7,10 +7,6 @@
 
 import SwiftUI
 
-enum AudioControlButtonType {
-    case previous
-    case next
-}
 
 struct MusicPlayerView: View {
     var selectedTrack: GeneratedItem
