@@ -15,39 +15,39 @@ struct MainTabView: View {
     @State var isAnimating: Bool = false
     
     var body: some View {
-        ZStack(alignment: .bottom) {
-            VStack {
-                switch selectedTab {
-                case .main:
-                    VStack {
-                        GeneratedItemsListView() { item in
-                            if !isAnimating {
-                                playerVM.isPlaying = true
-                                if (playerVM.currentTrack == nil) { // spring anim only if player currently hidden
-                                    withAnimation(.spring(response: 0.6, dampingFraction: 0.5)) {
-                                        playerVM.currentTrack = item
-                                    }
-                                } else {
+        VStack {
+            switch selectedTab {
+            case .main:
+                VStack {
+                    GeneratedItemsListView() { item in
+                        if !isAnimating {
+                            playerVM.isPlaying = true
+                            if (playerVM.currentTrack == nil) { // spring anim only if player currently hidden
+                                withAnimation(.spring(response: 0.6, dampingFraction: 0.5)) {
                                     playerVM.currentTrack = item
                                 }
+                            } else {
+                                playerVM.currentTrack = item
                             }
                         }
-                        .padding(.vertical)
                     }
-                case .explore:
-                    EmptyView()
-                case .library:
-                    EmptyView()
-                case .profile:
-                    EmptyView()
+                    .padding(.vertical)
                 }
-                
-                Spacer()
+            case .explore:
+                EmptyView()
+            case .library:
+                EmptyView()
+            case .profile:
+                EmptyView()
             }
             
-            BottomOverlayView()
+            Spacer()
         }
-        .ignoresSafeArea(.container, edges: .bottom)
+        .overlay(alignment: .bottom) {
+            BottomOverlayView()
+                .padding(.bottom, 10)
+        }
+        .ignoresSafeArea(edges: .bottom)
     }
 }
 
