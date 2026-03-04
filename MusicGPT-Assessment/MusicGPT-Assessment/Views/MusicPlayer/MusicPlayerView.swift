@@ -14,19 +14,22 @@ struct MusicPlayerView: View {
     
     @Binding var offsetY: Double
     
-    @State var opacity: Double = 1.0
-    
     var trackChanged: (AudioControlButtonType) -> Void
     var trackClosed: () -> Void
     var playerDisappeared: () -> Void
     
     var body: some View {
         ZStack {
-            Rectangle()
-                .frame(height: 72)
-                .border(.white.opacity(0.05), width: 1)
-                .cornerRadius(20)
-                .foregroundColor(.musicPlayerBG)
+            ZStack {
+                TransparentBlurView(style: .systemThickMaterial)
+                
+                Rectangle()
+                    .border(.white.opacity(0.05), width: 1)
+                    .foregroundColor(.musicPlayerBG)
+            }
+            .frame(height: 72)
+            .cornerRadius(20)
+            
             
             HStack(spacing: 12) {
                 Image(selectedTrack.artworkName)
@@ -48,8 +51,8 @@ struct MusicPlayerView: View {
             .frame(height: 72)
             .padding(.leading, 8)
         }
+        .frame(width: 386)
         .offset(y: offsetY)
-        .opacity(opacity)
         .onAppear {
             withAnimation(.spring(response: 0.7, dampingFraction: 0.6)) {
                 offsetY = 0
