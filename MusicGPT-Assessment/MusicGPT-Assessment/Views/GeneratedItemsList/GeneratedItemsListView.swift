@@ -31,13 +31,9 @@ struct GeneratedItemsListView: View {
             
             Spacer()
         }
-        .padding(.leading)
+        .padding(.horizontal)
     }
 }
-
-
-
-
 
 struct TitleView: View {
     var body: some View {
