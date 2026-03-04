@@ -111,8 +111,18 @@ extension MainTabView {
             
             CustomTabView(selectedTab: $selectedTab)
         }
+        .overlay(alignment: .bottom) {
+            if(isTextFieldFocused) {
+                KeyboardGlowView(minBlurRadius: 40, maxBlurRadius: 80, maxOpacity: 0.7)
+                    .frame(height: 250)
+                    .ignoresSafeArea(edges: .bottom)
+                    .padding(.bottom, 50)
+            }
+        }
+        .animation(.easeInOut(duration: 0.3), value: isTextFieldFocused)
     }
 }
+
 
 #Preview {
     MainTabView()
