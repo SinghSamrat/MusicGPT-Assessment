@@ -36,33 +36,7 @@ struct GeneratedItemsListView: View {
 }
 
 
-struct CreateButtonView: View {
-    var createTapped: () -> Void
-    
-    var body: some View {
-        Button {
-            createTapped()
-        } label: {
-            ZStack {
-                Rectangle()
-                    .frame(width: 103, height: 44)
-                    .cornerRadius(100)
-                    .foregroundColor(.white.opacity(0.1))
-                
-                HStack(spacing: 4) {
-                    Image("stars")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 20)
-                    
-                    Text("Create")
-                        .font(.system(size: 14, weight: .bold))
-                        .foregroundColor(.white)
-                }
-            }
-        }
-    }
-}
+
 
 
 struct TitleView: View {
