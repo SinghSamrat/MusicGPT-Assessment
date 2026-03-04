@@ -33,7 +33,7 @@ struct CreateButtonView: View {
                     
                     Text("Create")
                         .font(.system(size: 14, weight: .bold))
-                        .foregroundColor(.white)
+                        .foregroundColor(.textGray)
                 }
             }
         }
