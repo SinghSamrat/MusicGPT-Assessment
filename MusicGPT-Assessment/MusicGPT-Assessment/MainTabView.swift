@@ -31,11 +31,7 @@ struct MainTabView: View {
                             }
                         }
                     }
-                    
-                    CreateButtonView() {
-                        // create logic
-                    }
-                    .offset(y: (playerOffsetY <= Constants.MusicPlayerAnimation.playerMaxOffsetY - 5) ? playerOffsetY / 2 : 0)
+                    .padding(.vertical)
                 }
             case .explore:
                 EmptyView()
@@ -44,7 +40,26 @@ struct MainTabView: View {
             case .profile:
                 EmptyView()
             }
+            
             Spacer()
+        }
+        .overlay(alignment: .bottom) {
+            BottomOverlayView()
+                .padding(.bottom, 10)
+        }
+        .ignoresSafeArea(edges: .bottom)
+    }
+}
+
+extension MainTabView {
+    func BottomOverlayView() -> some View{
+        return VStack{
+            if (selectedTab == .main) {
+                CreateButtonView() {
+                    // create logic
+                }
+                .offset(y: (playerOffsetY <= Constants.MusicPlayerAnimation.playerMaxOffsetY - 5) ? playerOffsetY / 2 : 0)
+            }
             
             if let currentTrack = playerVM.currentTrack {
                 MusicPlayerView(selectedTrack: currentTrack,
@@ -62,12 +77,12 @@ struct MainTabView: View {
                 } playerDisappeared: {
                     isAnimating = false
                 }
-                                .padding(.horizontal, 8)
+                .padding(.horizontal, 8)
+                .zIndex(1)
             }
+            
             CustomTabView(selectedTab: $selectedTab)
         }
-        .padding(.vertical)
-        .ignoresSafeArea(edges: .bottom)
     }
 }
 
