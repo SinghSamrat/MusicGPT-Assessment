@@ -14,6 +14,9 @@ struct MainTabView: View {
     @State var playerOffsetY: Double = Constants.MusicPlayerAnimation.playerInitialOffset
     @State var isAnimating: Bool = false
     
+    @State private var isCreating: Bool = false
+    @State private var promptText: String = ""
+    
     var body: some View {
         VStack {
             switch selectedTab {
@@ -55,10 +58,21 @@ extension MainTabView {
     func BottomOverlayView() -> some View{
         return VStack{
             if (selectedTab == .main) {
-                CreateButtonView() {
-                    // create logic
+                if !isCreating {
+                    CreateButtonView() {
+                        withAnimation(.easeInOut(duration: 0.4)) {
+                            isCreating = true
+                        }
+                    }
+                    .offset(y: (playerOffsetY <= Constants.MusicPlayerAnimation.playerMaxOffsetY - 5) ? playerOffsetY / 2 : 0)
                 }
-                .offset(y: (playerOffsetY <= Constants.MusicPlayerAnimation.playerMaxOffsetY - 5) ? playerOffsetY / 2 : 0)
+            }
+            
+            if isCreating {
+                FloatingTextField(placeholder: "Create Song", text: $promptText, isCreating: $isCreating)
+                    .padding(.bottom, 250)
+                    .padding(.horizontal)
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
             }
             
             if let currentTrack = playerVM.currentTrack {

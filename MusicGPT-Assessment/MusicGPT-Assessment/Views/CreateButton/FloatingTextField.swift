@@ -11,6 +11,7 @@ import SwiftUI
 struct FloatingTextField: View {
     var placeholder: String
     @Binding var text: String
+    @Binding var isCreating: Bool
     @FocusState var isFocused: Bool
     
     var body: some View {
@@ -24,6 +25,7 @@ struct FloatingTextField: View {
                     .font(.system(size: 16))
                 Button {
                     print("button pressed")
+                    isFocused = false // Dismiss keyboard
                 } label: {
                     Image(systemName: "arrow.up.circle.fill")
                         .resizable()
@@ -47,9 +49,14 @@ struct FloatingTextField: View {
                     .stroke(isFocused ? Color.blue : Color.gray.opacity(0.3))
             }
         )
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                isFocused = true
+            }
+        }
         .onChange(of: isFocused) { _, newValue in
             if !newValue {
-                print("TextField lost focus")
+                isCreating = false
             }
         }
     }
