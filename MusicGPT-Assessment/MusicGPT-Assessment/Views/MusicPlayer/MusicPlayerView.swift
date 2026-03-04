@@ -58,28 +58,45 @@ struct MusicPlayerView: View {
         .gesture(
             DragGesture()
                 .onChanged({ value in
-                    if (value.translation.height > 0) {
-                        offsetY = value.translation.height
-                    }
+                    handleDragChanged(value)
                 })
                 .onEnded({ value in
-                    let translation = value.translation.height
-                    let velocity = value.velocity.height
-                    
-                    if translation > 80 || velocity > 300 {
-                        withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) {
-                            offsetY = Constants.MusicPlayerAnimation.playerMaxOffsetY
-                            trackClosed()
-                        }
-                    } else {
-                        withAnimation(.easeInOut(duration: 0.6)) {
-                            offsetY = 0
-                        }
-                    }
+                    handleDragEnded(value)
                 })
         )
         .onDisappear {
             playerDisappeared()
+        }
+    }
+}
+
+extension MusicPlayerView {
+    private func handleDragChanged(_ value: DragGesture.Value) {
+        guard value.translation.height > 0 else { return }
+        offsetY = value.translation.height
+    }
+
+    private func handleDragEnded(_ value: DragGesture.Value) {
+        let translation = value.translation.height
+        let velocity = value.velocity.height
+
+        if (translation > 80 || velocity > 300) {
+            dismissPlayer()
+        } else {
+            resetPosition()
+        }
+    }
+
+    private func dismissPlayer() {
+        withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) {
+            offsetY = Constants.MusicPlayerAnimation.playerMaxOffsetY
+            trackClosed()
+        }
+    }
+
+    private func resetPosition() {
+        withAnimation(.easeInOut(duration: 0.6)) {
+            offsetY = 0
         }
     }
 }
