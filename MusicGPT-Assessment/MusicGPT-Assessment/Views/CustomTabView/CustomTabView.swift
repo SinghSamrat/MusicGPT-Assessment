@@ -35,24 +35,29 @@ struct CustomTabView: View {
     @Binding var selectedTab: TabItem
     
     var body: some View {
-        HStack(spacing: 63) {
-            ForEach(TabItem.allCases) { tabItem in
-                CustomTabItem(tabItem: tabItem) {
-                    withAnimation(.easeInOut(duration: 0.1)) {
-                        selectedTab = tabItem
+        ZStack {
+            Color(.appBackground)
+            
+            HStack(spacing: 63) {
+                ForEach(TabItem.allCases) { tabItem in
+                    CustomTabItem(tabItem: tabItem) {
+                        withAnimation(.easeInOut(duration: 0.1)) {
+                            selectedTab = tabItem
+                        }
                     }
+                    .tag(tabItem)
+                    .foregroundColor(selectedTab == tabItem ? .white : .secondary)
                 }
-                .tag(tabItem)
-                .foregroundColor(selectedTab == tabItem ? .white : .secondary)
+            }
+            .frame(maxHeight: 85)
+            .padding(.horizontal, 56)
+            .overlay(alignment: .top) {
+                Rectangle()
+                    .fill(Color.gray.opacity(0.4))
+                    .frame(height: 1)
             }
         }
-        .frame(maxHeight: 85)
-        .padding(.horizontal, 56)
-        .overlay(alignment: .top) {
-            Rectangle()
-                .fill(Color.gray.opacity(0.4))
-                .frame(height: 1)
-        }
+        .frame(height: 85)
     }
 }
 
