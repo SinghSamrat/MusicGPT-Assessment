@@ -10,6 +10,8 @@ import SwiftUI
 @Observable
 class GeneratedItemsListViewModel {
     var allItems: [GeneratedItem] = sampleGeneratedItems
+    var isGenerating: Bool = false
+    var generatingItem: GeneratingItem?
     
     func addItem(_ item: GeneratedItem) {
         allItems.append(item)
