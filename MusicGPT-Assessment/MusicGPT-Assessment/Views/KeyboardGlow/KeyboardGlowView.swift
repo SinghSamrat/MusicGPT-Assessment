@@ -40,7 +40,7 @@ struct KeyboardGlowView: View {
                 minBlurRadius = maxBlurRadius
                 opacity = maxOpacity
             }
-            .animation(
+            .animation( // gradually increase opacity
                 .linear(duration: 2),
                 value: opacity
             )

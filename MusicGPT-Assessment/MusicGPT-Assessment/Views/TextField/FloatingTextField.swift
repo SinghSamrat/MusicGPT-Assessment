@@ -86,9 +86,9 @@ struct FloatingTextField: View {
             .linear(duration: 4).repeatForever(autoreverses: false),
             value: rotation
         )
-        .onChange(of: isFocused) { _, newValue in
-            if !newValue {
-                isCreating = false
+        .onChange(of: isFocused) { _, isFocused in
+            if !isFocused {
+                isCreating = false // dismiss textfield if not focused
             }
         }
     }
