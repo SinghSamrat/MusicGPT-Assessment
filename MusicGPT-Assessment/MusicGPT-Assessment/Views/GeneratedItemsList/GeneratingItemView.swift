@@ -11,6 +11,7 @@ import SwiftUI
 struct GeneratingItemView: View  {
     var prompt: String
     var version: Int
+    var artworkName: String
     var generationCompleted:() -> Void
     
     @State private var progress: Double = 0.0
@@ -30,7 +31,13 @@ struct GeneratingItemView: View  {
             
             HStack(spacing: 12) {
                 ZStack {
+                    Image(artworkName)
+                        .foregroundColor(.white)
+                        .frame(width: 69, height: 69)
+                        .cornerRadius(16.0)
+                    
                     GeneratingItemImageRectangle()
+                        .opacity(1.7 - progress)
                     
                     Text("\(Int(progress * 100))%")
                         .font(.system(size: 12, weight: .medium))
@@ -103,5 +110,5 @@ extension GeneratingItemView {
 }
 
 #Preview {
-    GeneratingItemView(prompt: "", version: 1, generationCompleted: {})
+    GeneratingItemView(prompt: "", version: 1, artworkName: "monday-blues", generationCompleted: {})
 }

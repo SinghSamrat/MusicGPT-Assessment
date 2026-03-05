@@ -28,6 +28,7 @@ struct GeneratedItemsListView: View {
                     if viewModel.isGenerating {
                         GeneratingItemView(prompt: viewModel.generatingItem?.originalPrompt ?? "",
                                            version: 1,
+                                           artworkName: "monday-blues",
                                            generationCompleted: {
                             generationCount += 1
                             onGenerationCompleted()
@@ -35,6 +36,7 @@ struct GeneratedItemsListView: View {
                         })
                         GeneratingItemView(prompt: viewModel.generatingItem?.originalPrompt ?? "",
                                            version: 2,
+                                           artworkName: "monday-blues",
                                            generationCompleted: {
                             generationCount += 1
                             onGenerationCompleted()
