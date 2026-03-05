@@ -17,6 +17,8 @@ struct FloatingTextField: View {
     @State private var rotation: Double = 0
     @State private var blurRadius: Double = 5
     
+    var promptSubmitted: (String) -> Void
+    
     var body: some View {
         ZStack(alignment: .leading) {
             RoundedRectangle(cornerRadius: 35, style: .continuous)
@@ -49,8 +51,8 @@ struct FloatingTextField: View {
                     .focused($isFocused)
                     .font(.system(size: 16))
                 Button {
-                    print("button pressed")
                     isFocused = false // Dismiss keyboard
+                    promptSubmitted(text)
                 } label: {
                     Image(systemName: "arrow.up.circle.fill")
                         .resizable()
@@ -109,7 +111,7 @@ struct SpringButtonStyle: ButtonStyle {
 }
 
 #Preview {
-    FloatingTextField(placeholder: "", text: .constant(""), isCreating: .constant(false))
+    FloatingTextField(placeholder: "", text: .constant(""), isCreating: .constant(false)) {prompt in}
 //    Button {
 //        print("button pressed")
 //    } label: {

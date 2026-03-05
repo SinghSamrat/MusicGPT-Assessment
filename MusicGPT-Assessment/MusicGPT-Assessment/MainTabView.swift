@@ -84,11 +84,18 @@ extension MainTabView {
             }
             
             if isCreating {
-                FloatingTextField(placeholder: "Create Song", text: $promptText, isCreating: $isCreating)
-                    .padding(.bottom, playerVM.currentTrack == nil ? 250 : 170)
-                    .padding(.horizontal)
-                    .transition(.move(edge: .bottom).combined(with: .opacity))
-                    .focused($isTextFieldFocused)
+                FloatingTextField(placeholder: "Create Song",
+                                  text: $promptText,
+                                  isCreating: $isCreating,
+                                  promptSubmitted: {prompt in
+                    generatedItemsVM.isGenerating = true
+                    generatedItemsVM.generatingItem = GeneratingItem(originalPrompt: prompt,
+                                                                     artworkName: "peace-at-paradise")
+                })
+                .padding(.bottom, playerVM.currentTrack == nil ? 250 : 170)
+                .padding(.horizontal)
+                .transition(.move(edge: .bottom).combined(with: .opacity))
+                .focused($isTextFieldFocused)
             }
             
             if let currentTrack = playerVM.currentTrack {
