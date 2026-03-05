@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct GeneratedItemsListView: View {
-    @State var viewModel = GeneratedItemsListViewModel()
+    let maxGenerations: Int = 2
+    
+    @Environment(GeneratedItemsListViewModel.self) private var viewModel
     var trackChanged: (GeneratedItem) -> Void
     
     var body: some View {

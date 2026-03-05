@@ -10,6 +10,7 @@ import SwiftUI
 struct MainTabView: View {
     @State private var selectedTab: TabItem = .main
     @State var playerVM = MusicPlayerViewModel()
+    @State var generatedItemsVM = GeneratedItemsListViewModel()
     
     @State var playerOffsetY: Double = Constants.MusicPlayerAnimation.playerInitialOffset
     @State var isAnimating: Bool = false
@@ -37,6 +38,7 @@ struct MainTabView: View {
                         }
                     }
                     .padding(.vertical)
+                    .environment(generatedItemsVM)
                     
                     if isTextFieldFocused {
                         Color.black.opacity(0.001) // invisible but tappable
