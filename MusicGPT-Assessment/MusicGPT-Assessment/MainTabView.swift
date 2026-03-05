@@ -17,6 +17,8 @@ struct MainTabView: View {
     
     @State private var isCreating: Bool = false
     @State private var promptText: String = ""
+    
+    @State var musicProgress: Double = 0.0
 
     @FocusState private var isTextFieldFocused: Bool
     
@@ -28,6 +30,7 @@ struct MainTabView: View {
                     GeneratedItemsListView() { item in
                         if !isAnimating {
                             playerVM.isPlaying = true
+                            resetProgress()
                             if (playerVM.currentTrack == nil) { // spring anim only if player currently hidden
                                 withAnimation(.spring(response: 0.6, dampingFraction: 0.5)) {
                                     playerVM.currentTrack = item
@@ -116,9 +119,28 @@ extension MainTabView {
                 }
                 .padding(.horizontal, 8)
                 .zIndex(1)
+                .onAppear() {
+                    simulateProgress()
+                }
             }
             
             CustomTabView(selectedTab: $selectedTab)
+                .overlay(alignment: .top) {
+                    Rectangle()
+                        .fill(Color.gray.opacity(0.4))
+                        .frame(height: 1)
+                    
+                    GeometryReader { geo in
+                        Rectangle()
+                            .frame(width: geo.size.width * musicProgress)
+                            .frame(height: 1)
+                            .foregroundColor(.gray)
+                            .animation(.linear, value: musicProgress)
+                            .opacity(playerVM.currentTrack != nil ? 1.0 : 0.0)
+                    }
+                    .frame(height: 1)
+                }
+            
         }
         .overlay(alignment: .bottom) {
             if(isTextFieldFocused) {
@@ -129,6 +151,30 @@ extension MainTabView {
             }
         }
         .animation(.easeInOut(duration: 0.3), value: isTextFieldFocused)
+    }
+    
+    func simulateProgress() {
+        Task {
+            while musicProgress < 1.0 {
+                try? await Task.sleep(nanoseconds: 120_000_000)
+                
+                if playerVM.isPlaying {
+                    musicProgress += 0.005
+                }
+                
+                if musicProgress >= 1.0 {
+                    musicProgress = 1.0
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        playerVM.isPlaying = false
+                    }
+                    break
+                }
+            }
+        }
+    }
+    
+    func resetProgress() {
+        musicProgress = 0.0
     }
 }
 

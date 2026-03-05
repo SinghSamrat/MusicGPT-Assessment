@@ -51,11 +51,6 @@ struct CustomTabView: View {
             }
             .frame(maxHeight: 85)
             .padding(.horizontal, 56)
-            .overlay(alignment: .top) {
-                Rectangle()
-                    .fill(Color.gray.opacity(0.4))
-                    .frame(height: 1)
-            }
         }
         .frame(height: 85)
     }
