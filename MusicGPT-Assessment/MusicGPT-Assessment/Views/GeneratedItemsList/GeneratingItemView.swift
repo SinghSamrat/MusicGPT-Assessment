@@ -12,7 +12,7 @@ struct GeneratingItemView: View  {
     var prompt: String
     var version: Int
     var artworkName: String
-    var generationCompleted:() -> Void
+    var generationCompleted:(Bool) -> Void
     
     @State private var progress: Double = 0.0
     @State private var isGenerating = true
@@ -72,7 +72,7 @@ struct GeneratingItemView: View  {
         }
         .onChange(of: isGenerating) { _, newValue in
             if (!newValue) {
-                generationCompleted()
+                generationCompleted(generationState != .failure)
                 // generation finished, replace with new item
             }
         }
@@ -84,6 +84,12 @@ extension GeneratingItemView {
         Task {
             while progress < 1.0 {
                 try? await Task.sleep(nanoseconds: UInt64.random(in: 2_000_000_000...4_000_000_000))
+                
+                if prompt.count < 10 {
+                    generationState = .failure
+                    isGenerating = false
+                    return
+                }
                 
                 withAnimation(.easeInOut(duration: 0.5)) {
                     progress += 0.25
@@ -110,5 +116,5 @@ extension GeneratingItemView {
 }
 
 #Preview {
-    GeneratingItemView(prompt: "", version: 1, artworkName: "monday-blues", generationCompleted: {})
+    GeneratingItemView(prompt: "", version: 1, artworkName: "monday-blues", generationCompleted: {_ in })
 }
