@@ -37,7 +37,7 @@ struct FloatingTextField: View {
                     .cornerRadius(35)
                 
                 Rectangle()
-                    .fill(.createFieldBG.opacity(0.8))
+                    .fill(.createFieldBG.opacity(1.0))
                     .cornerRadius(35)
             }
             .frame(height: 50)
