@@ -13,6 +13,7 @@ enum GenerationState: Int, CaseIterable {
     case preparingAudio
     case almostDone
     case completed
+    case failure
     
     var title: String {
         switch self {
@@ -26,6 +27,8 @@ enum GenerationState: Int, CaseIterable {
             return "Almost Done."
         case .completed:
             return "Completed"
+        case .failure:
+            return "Failure"
         }
     }
 }
@@ -34,4 +37,5 @@ struct GeneratingItem: Identifiable, Hashable {
     let id: UUID = UUID()
     var originalPrompt: String
     var artworkName: String
+    var didFail: Bool = false
 }

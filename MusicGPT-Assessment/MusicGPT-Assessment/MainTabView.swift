@@ -88,9 +88,8 @@ extension MainTabView {
                                   text: $promptText,
                                   isCreating: $isCreating,
                                   promptSubmitted: {prompt in
-                    generatedItemsVM.isGenerating = true
-                    generatedItemsVM.generatingItem = GeneratingItem(originalPrompt: prompt,
-                                                                     artworkName: "peace-at-paradise")
+                    generatedItemsVM.generatingItems.append(GeneratingItem(originalPrompt: prompt,
+                                                                     artworkName: "peace-at-paradise"))
                 })
                 .padding(.bottom, playerVM.currentTrack == nil ? 250 : 170)
                 .padding(.horizontal)
