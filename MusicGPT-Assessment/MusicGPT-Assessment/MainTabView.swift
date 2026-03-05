@@ -58,6 +58,7 @@ struct MainTabView: View {
             
             Spacer()
         }
+        .padding(.bottom, 50)
         .overlay(alignment: .bottom) {
             BottomOverlayView()
                 .padding(.bottom, 10)
