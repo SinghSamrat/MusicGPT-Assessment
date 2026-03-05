@@ -45,7 +45,7 @@ struct GeneratedItemsListView: View {
                                 }
                             }
                             
-                            GeneratingItemView(prompt: item.originalPrompt, version: 1, artworkName: "monday-blues") { success in
+                            GeneratingItemView(prompt: item.originalPrompt, version: 2, artworkName: "monday-blues") { success in
                                 generationCount += 1
                                 if (generationCount == 2) {
                                     generationCount = 0
