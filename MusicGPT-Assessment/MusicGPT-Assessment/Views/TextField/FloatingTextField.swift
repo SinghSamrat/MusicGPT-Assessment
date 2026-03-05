@@ -59,6 +59,7 @@ struct FloatingTextField: View {
                         .foregroundColor(text.isEmpty ? .gray : .white)
                         .padding(.trailing, 9)
                 }
+                .buttonStyle(SpringButtonStyle())
                 .disabled(text.isEmpty)
             }
             .frame(height: 50)
@@ -92,4 +93,32 @@ struct FloatingTextField: View {
             }
         }
     }
+}
+
+struct SpringButtonStyle: ButtonStyle {
+    var scaleAmount: CGFloat = 0.85
+    
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? scaleAmount : 1)
+            .animation(
+                .spring(response: 0.3, dampingFraction: 0.5),
+                value: configuration.isPressed
+            )
+    }
+}
+
+#Preview {
+    FloatingTextField(placeholder: "", text: .constant(""), isCreating: .constant(false))
+//    Button {
+//        print("button pressed")
+//    } label: {
+//        Image(systemName: "arrow.up.circle.fill")
+//            .resizable()
+//            .aspectRatio(contentMode: .fit)
+//            .frame(width: 100)
+//            .foregroundColor( .white)
+//            .padding(.trailing, 9)
+//    }
+//    .buttonStyle(SpringButtonStyle())
 }
