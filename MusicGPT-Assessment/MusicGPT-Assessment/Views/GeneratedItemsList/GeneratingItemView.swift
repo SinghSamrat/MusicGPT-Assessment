@@ -32,7 +32,6 @@ struct GeneratingItemView: View  {
             HStack(spacing: 12) {
                 ZStack {
                     Image(artworkName)
-                        .foregroundColor(.white)
                         .frame(width: 69, height: 69)
                         .cornerRadius(16.0)
                     
@@ -48,8 +47,10 @@ struct GeneratingItemView: View  {
                     Text(prompt)
                         .font(.system(size: 16))
                         .lineLimit(1)
+                        .foregroundColor(.white)
                     
                     Text(generationState.title)
+                        .foregroundColor(.gray)
                         .font(.system(size: 14))
                         .foregroundStyle(.secondary)
                         .lineLimit(1)
@@ -58,6 +59,7 @@ struct GeneratingItemView: View  {
                 Spacer()
                 
                 Text("v\(version)")
+                    .foregroundColor(.textGray)
                     .font(.system(size: 14, weight: .medium))
                     .frame(width: 39, height: 26)
                     .background() {

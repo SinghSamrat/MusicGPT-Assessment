@@ -49,6 +49,7 @@ struct FloatingTextField: View {
                     .padding(.leading, 21)
                 TextField("\(placeholder)", text: $text)
                     .focused($isFocused)
+                    .foregroundColor(.white)
                     .font(.system(size: 16))
                 Button {
                     isFocused = false // Dismiss keyboard

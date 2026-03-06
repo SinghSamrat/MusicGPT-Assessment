@@ -102,6 +102,7 @@ struct TitleView: View {
             .resizable()
             .aspectRatio(contentMode: .fit)
         Text("MusicGPT")
+            .foregroundColor(.white)
             .font(.system(size: 18))
             .fontWeight(.medium)
     }

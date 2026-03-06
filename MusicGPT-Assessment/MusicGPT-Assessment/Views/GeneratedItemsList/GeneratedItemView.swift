@@ -15,16 +15,16 @@ struct GeneratedItemView: View  {
     var body: some View {
         HStack(spacing: 12) {
             Image(generatedItem.artworkName)
-                .foregroundColor(.white)
                 .frame(width: 64, height: 64)
                 .cornerRadius(16.0)
             
             VStack(alignment: .leading) {
                 Text(generatedItem.title)
                     .font(.system(size: 16))
+                    .foregroundColor(.white)
                 Text(generatedItem.originalPrompt)
                     .font(.system(size: 14))
-                    .foregroundStyle(.secondary)
+                    .foregroundColor(.gray)
                     .lineLimit(1)
             }
             

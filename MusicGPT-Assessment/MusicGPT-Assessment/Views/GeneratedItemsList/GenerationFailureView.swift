@@ -20,13 +20,15 @@ struct GenerationFailureView: View {
             
             VStack(alignment: .leading) {
                 Text("Invalid Prompt")
+                    .foregroundColor(.white)
                     .font(.system(size: 14))
                 Text(prompt)
                     .font(.system(size: 13))
-                    .foregroundStyle(.secondary)
+                    .foregroundColor(.gray)
                     .lineLimit(1)
                 Text("Your prompt is too short.")
                     .font(.system(size: 14, weight: .light))
+                    .foregroundColor(.white)
                     .padding(.top, 0.5)
             }
             

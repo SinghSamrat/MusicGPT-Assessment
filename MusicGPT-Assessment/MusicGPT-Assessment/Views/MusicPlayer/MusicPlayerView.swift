@@ -39,6 +39,7 @@ struct MusicPlayerView: View {
                     .cornerRadius(12)
                 
                 Text(selectedTrack.title)
+                    .foregroundColor(.white)
                     .font(.system(size: 16, weight: .medium))
                 
                 Spacer()
