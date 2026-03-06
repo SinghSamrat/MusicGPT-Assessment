@@ -44,10 +44,9 @@ struct GeneratingItemView: View  {
                 }
                 
                 VStack(alignment: .leading) {
-                    Text(prompt)
+                    ShimmerText(text: prompt)
                         .font(.system(size: 16))
                         .lineLimit(1)
-                        .foregroundColor(.white)
                     
                     Text(generationState.title)
                         .foregroundColor(.gray)
@@ -76,6 +75,40 @@ struct GeneratingItemView: View  {
             if (!newValue) {
                 generationCompleted(generationState != .failure)
                 // generation finished, replace with new item
+            }
+        }
+    }
+}
+
+struct ShimmerText: View {
+    let text: String
+    
+    @State private var move: CGFloat = -200
+    
+    var body: some View {
+        ZStack {
+            Text(text)
+                .foregroundColor(.gray)
+            
+            Text(text)
+                .foregroundColor(.white)
+                .mask(
+                    LinearGradient(
+                        colors: [.clear, .white, .clear],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                    .frame(width: 80)
+                    .offset(x: move)
+                    .blur(radius: 8)
+                )
+        }
+        .onAppear {
+            withAnimation(
+                .linear(duration: 1.8).delay(2.0)
+                .repeatForever(autoreverses: false)
+            ) {
+                move = 200
             }
         }
     }
