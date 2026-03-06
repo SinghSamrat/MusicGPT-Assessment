@@ -26,7 +26,7 @@ struct MainTabView: View {
             case .main:
                 ZStack {
                     GeneratedItemsListView() { item in
-                        if !isAnimating {
+                        if !isPlayerAnimating {
                             playerVM.isPlaying = true
                             resetProgress()
                             if (playerVM.currentTrack == nil) { // spring anim only if player currently hidden
@@ -82,6 +82,7 @@ extension MainTabView {
                         }
                     }
                     .offset(y: (playerOffsetY <= Constants.MusicPlayerAnimation.playerMaxOffsetY - 5) ? playerOffsetY / 2 : 0)
+                    .transition(.scaleX)
                 }
             }
             
@@ -95,9 +96,9 @@ extension MainTabView {
                         isCreating = false
                     }
                 })
-                .padding(.bottom, playerVM.currentTrack == nil ? 250 : 170)
-                .padding(.horizontal)
-                .transition(.move(edge: .bottom).combined(with: .opacity))
+                .padding(.bottom, 250)
+                .padding(.horizontal, 8)
+                .transition(.move(edge: .bottom).combined(with: .opacity).combined(with: .shrinkX))
                 .focused($isTextFieldFocused)
             }
             
@@ -106,16 +107,14 @@ extension MainTabView {
                                 isPlaying: $playerVM.isPlaying,
                                 offsetY: $playerOffsetY) { controlType in
                     switch controlType {
-                    case .next:
-                        break
-                    case .previous:
-                        break
+                    case .next: break
+                    case .previous: break
                     }
                 } trackClosed: {
-                    isAnimating = true
+                    isPlayerAnimating = true
                     playerVM.currentTrack = nil
                 } playerDisappeared: {
-                    isAnimating = false
+                    isPlayerAnimating = false
                 }
                 .padding(.horizontal, 8)
                 .zIndex(1)
@@ -126,12 +125,12 @@ extension MainTabView {
             
             CustomTabView(selectedTab: $selectedTab)
                 .overlay(alignment: .top) {
-                    Rectangle()
+                    Rectangle() // separator
                         .fill(Color.gray.opacity(0.4))
                         .frame(height: 1)
                     
                     GeometryReader { geo in
-                        Rectangle()
+                        Rectangle() // musicplayer progress
                             .frame(width: geo.size.width * musicProgress)
                             .frame(height: 1)
                             .foregroundColor(.gray)
@@ -152,7 +151,10 @@ extension MainTabView {
         }
         .animation(.easeInOut(duration: 0.3), value: isTextFieldFocused)
     }
-    
+}
+
+// music progress
+extension MainTabView {
     func simulateProgress() {
         Task {
             while musicProgress < 1.0 {
@@ -175,6 +177,38 @@ extension MainTabView {
     
     func resetProgress() {
         musicProgress = 0.0
+    }
+}
+
+extension AnyTransition {
+    static var scaleX: AnyTransition {
+        .modifier(
+            active: ScaleXEffect(scale: 2.0),
+            identity: ScaleXEffect(scale: 1.0)
+        )
+    }
+    
+    static var shrinkX: AnyTransition {
+        .modifier(
+            active: ShrinkXEffect(scale: 0.2),
+            identity: ShrinkXEffect(scale: 1.0)
+        )
+    }
+}
+
+struct ScaleXEffect: ViewModifier {
+    let scale: CGFloat
+    
+    func body(content: Content) -> some View {
+        content.scaleEffect(x: scale, y: 1, anchor: .center)
+    }
+}
+
+struct ShrinkXEffect: ViewModifier {
+    let scale: CGFloat
+    
+    func body(content: Content) -> some View {
+        content.scaleEffect(x: scale, y: 1, anchor: .center)
     }
 }
 
