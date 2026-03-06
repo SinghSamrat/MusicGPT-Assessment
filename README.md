@@ -76,6 +76,19 @@ or
 
 ---
 
+## Animation Decisions
+- Most animations and visual effects are implemented using SwiftUI’s native animation system to maintain a declarative and lightweight UI architecture.
+
+- The blur effect used in the interfaces like **MusicPlayer** is implemented using UIKit’s **UIVisualEffectView**, bridged into SwiftUI through the **UIViewRepresentable** protocol. This allows finer control over blur behavior that is not directly exposed through standard SwiftUI APIs.
+
+- The **Keyboard** and **Textfield** glow effects are created using softly blurred **LinearGradient** and **AngularGradient** layers. These gradients are animated using infinitely looping linear easing curves applied to their rotation, opacity, and blur radius.
+
+- The **Loading** animation effect is created using similar softly blurred **LinearGradient** and **RadialGradient** layers which are animated using **easeInOut** easing curves applied to their rotation, opacity, and radii coupled with the progress property.
+
+- UI elements such as the **MusicPlayer** and **CreateButton** use **spring** easing on animations to alter their y-offset to achieve bouncy animation. 
+
+---
+
 ## Project Structure
 
 ```bash
