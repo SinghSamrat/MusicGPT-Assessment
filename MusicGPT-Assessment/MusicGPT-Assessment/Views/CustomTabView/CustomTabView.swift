@@ -41,9 +41,7 @@ struct CustomTabView: View {
             HStack(spacing: 63) {
                 ForEach(TabItem.allCases) { tabItem in
                     CustomTabItem(tabItem: tabItem) {
-                        withAnimation(.easeInOut(duration: 0.1)) {
-                            selectedTab = tabItem
-                        }
+                        selectedTab = tabItem
                     }
                     .tag(tabItem)
                     .foregroundColor(selectedTab == tabItem ? .white : .secondary)

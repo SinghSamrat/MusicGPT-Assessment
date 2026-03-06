@@ -81,7 +81,11 @@ extension MainTabView {
                             isCreating = true
                         }
                     }
-                    .offset(y: (playerOffsetY <= Constants.MusicPlayerAnimation.playerMaxOffsetY - 5) ? playerOffsetY / 2 : 0)
+                    .offset(
+                        y: (playerOffsetY <= Constants.MusicPlayerAnimation.playerMaxOffsetY - 5)
+                        ? playerOffsetY / 2
+                        : 0
+                    )
                     .transition(.scaleX)
                 }
             }
@@ -92,7 +96,7 @@ extension MainTabView {
                                                         artworkName: "peace-at-paradise")
                     generatedItemsVM.generatingItems.append(generatingItem)
                 }, focusOut: {
-                    withAnimation(.easeInOut(duration: 0.4)) {
+                    withAnimation(.easeInOut(duration: 0.2)) {
                         isCreating = false
                     }
                 })

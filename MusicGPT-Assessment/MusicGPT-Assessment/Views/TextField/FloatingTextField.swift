@@ -53,6 +53,7 @@ struct FloatingTextField: View {
                 Button {
                     isFocused = false // Dismiss keyboard
                     promptSubmitted(text)
+                    addImpactHaptic(.medium)
                     text = ""
                 } label: {
                     Image(systemName: "arrow.up.circle.fill")
