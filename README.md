@@ -4,6 +4,7 @@
 
 MusicGPT is an iOS application built as part of the technical assessment project.  
 The app allows users to generate AI-based music tracks using prompts and play them using an integrated music player interface.
+
 **Minimum Deployment Target:** iOS 17+
 
 ---
@@ -29,7 +30,6 @@ Examples:
 - GeneratedItem + Sample Data related to generated audio items
 - GeneratingItem
 
----
 
 ### View Layer
 Handles UI rendering and user interactions.
@@ -42,7 +42,6 @@ Examples:
 
 Views are kept lightweight and delegate business logic to ViewModels.
 
----
 
 ### ViewModel Layer
 Contains application business logic and state management.
@@ -55,29 +54,24 @@ Responsibilities include:
 
 ---
 
-## ✨ Key Features
-
-- Easy and engaging AI music generation workflow simulation  
-- Real-time generation progress indicator
-- Interactive Music player interface
-- Smooth transition animations
-
----
-
 ## How to Build and Run
 
 ### 1. Clone the Repository
 
 ### 2. Open the Project in Xcode
 - Open MusicGPT-Assessment -> MusicGPT-Assessment.xcodeproj
-or 
+
+or
+
 - enter command 'xed MusicGPT-Assessment/MusicGPT-Assessment.xcodeproj' from project root
 
 ### 3. Select iOS Device or Simulator
 
 ### 4. Build and Run
 - Press ⌘ + R in Xcode
+
 or
+
 - Click the ▶️ Run button in Xcode toolbar
 
 ---
@@ -123,8 +117,8 @@ MusicGPT-Assessment
 │   └── TextField
 │       └── FloatingTextField.swift
 │
-├── App Files
-│   ├── AppConstants.swift
-│   ├── Assets.xcassets
-│   ├── MainTabView.swift
-│   └── MusicGPT_AssessmentApp.swift
+│
+├── AppConstants.swift
+├── Assets.xcassets
+├── MainTabView.swift
+├── MusicGPT_AssessmentApp.swift
