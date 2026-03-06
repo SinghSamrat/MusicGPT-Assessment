@@ -100,7 +100,7 @@ extension MainTabView {
                         isCreating = false
                     }
                 })
-                .padding(.bottom, 250)
+                .padding(.bottom, playerVM.currentTrack != nil ? 170 : 250)
                 .padding(.horizontal, 8)
                 .transition(.move(edge: .bottom).combined(with: .opacity).combined(with: .shrinkX))
                 .focused($isTextFieldFocused)
