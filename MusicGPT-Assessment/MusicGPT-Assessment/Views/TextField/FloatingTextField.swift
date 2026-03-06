@@ -10,14 +10,14 @@ import SwiftUI
 
 struct FloatingTextField: View {
     var placeholder: String
-    @Binding var text: String
-    @Binding var isCreating: Bool
+    @State var text: String = ""
     @FocusState var isFocused: Bool
     
     @State private var rotation: Double = 0
     @State private var blurRadius: Double = 5
     
     var promptSubmitted: (String) -> Void
+    var focusOut: () -> Void
     
     var body: some View {
         ZStack(alignment: .leading) {
@@ -92,7 +92,7 @@ struct FloatingTextField: View {
         )
         .onChange(of: isFocused) { _, isFocused in
             if !isFocused {
-                isCreating = false // dismiss textfield if not focused
+                focusOut()
             }
         }
     }
@@ -112,7 +112,12 @@ struct SpringButtonStyle: ButtonStyle {
 }
 
 #Preview {
-    FloatingTextField(placeholder: "", text: .constant(""), isCreating: .constant(false)) {prompt in}
+    FloatingTextField(placeholder: "", text: "") { String in
+        
+    } focusOut: {
+        
+    }
+
 //    Button {
 //        print("button pressed")
 //    } label: {

@@ -12,14 +12,12 @@ struct MainTabView: View {
     @State var playerVM = MusicPlayerViewModel()
     @State var generatedItemsVM = GeneratedItemsListViewModel()
     
+    // music player
     @State var playerOffsetY: Double = Constants.MusicPlayerAnimation.playerInitialOffset
-    @State var isAnimating: Bool = false
+    @State var isPlayerAnimating: Bool = false
+    @State var musicProgress: Double = 0.0
     
     @State private var isCreating: Bool = false
-    @State private var promptText: String = ""
-    
-    @State var musicProgress: Double = 0.0
-
     @FocusState private var isTextFieldFocused: Bool
     
     var body: some View {
@@ -88,12 +86,14 @@ extension MainTabView {
             }
             
             if isCreating {
-                FloatingTextField(placeholder: "Create Song",
-                                  text: $promptText,
-                                  isCreating: $isCreating,
-                                  promptSubmitted: {prompt in
-                    generatedItemsVM.generatingItems.append(GeneratingItem(originalPrompt: prompt,
-                                                                     artworkName: "peace-at-paradise"))
+                FloatingTextField(placeholder: "Create Song", promptSubmitted: {prompt in
+                    let generatingItem = GeneratingItem(originalPrompt: prompt,
+                                                        artworkName: "peace-at-paradise")
+                    generatedItemsVM.generatingItems.append(generatingItem)
+                }, focusOut: {
+                    withAnimation(.easeInOut(duration: 0.4)) {
+                        isCreating = false
+                    }
                 })
                 .padding(.bottom, playerVM.currentTrack == nil ? 250 : 170)
                 .padding(.horizontal)
